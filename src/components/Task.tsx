@@ -1,6 +1,13 @@
 import TaskInterface from '../interfaces/tasks';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const Task = ({ task }: { task: TaskInterface }) => {
+const Task = ({
+  task,
+  markHasCompleted,
+}: {
+  task: TaskInterface;
+  markHasCompleted: (taskId: number) => void;
+}) => {
   return (
     <>
       <div className="task-header">
@@ -9,7 +16,18 @@ const Task = ({ task }: { task: TaskInterface }) => {
       </div>
       <p className="task-description">{task.description}</p>
       <p className="task-status">
-        {task.completed ? 'Completed' : 'Incomplete'}
+        <label htmlFor={`status-${task.id}`} className="check">
+          {<CheckCircleIcon />}
+        </label>
+        <input
+          type="checkbox"
+          name="status"
+          id={`status-${task.id}`}
+          className="checkbox-status"
+          onChange={() => {
+            markHasCompleted(task.id);
+          }}
+        />
       </p>
     </>
   );

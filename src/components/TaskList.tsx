@@ -8,16 +8,26 @@ const TaskList = () => {
     {
       id: 1,
       title: 'Learn TypeScript',
-      completed: true,
-      description: 'lorem ipsmu',
+      completed: false,
+      description:
+        'Learn all about TypeScript, is functionalities, types interfaces and more! ',
     },
     {
       id: 2,
-      title: 'Do some TypeScript Katas',
+      title: 'Do some TypeScript exercises',
       completed: false,
-      description: 'lorem ipsmu',
+      description:
+        'Reinforce my understanding of TypeScript through practical exercises to strengthen my skills.',
     },
   ]);
+
+  const markHasCompleted = (taskId: number) => {
+    setTasks(previousArray => {
+      return previousArray.map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task,
+      );
+    });
+  };
 
   console.log(tasks);
 
@@ -26,8 +36,13 @@ const TaskList = () => {
       <ul id="tasks-list">
         {tasks.map(task => {
           return (
-            <li key={task.id} className="task-container">
-              <Task task={task} />
+            <li
+              key={task.id}
+              className={`${
+                task.completed ? 'task-container completed' : 'task-container'
+              }`}
+            >
+              <Task task={task} markHasCompleted={markHasCompleted} />
             </li>
           );
         })}

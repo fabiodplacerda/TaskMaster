@@ -30,6 +30,7 @@ h1 {
   width: 30rem;
   padding: 1rem;
   border-radius: 1rem;
+  transition: all 0.3s ease;
 }
 
 .task-header {
@@ -51,4 +52,17 @@ h1 {
 .task-description {
   margin-bottom: 1rem;
   font-size: 1.1rem;
+}
+
+.checkbox-status {
+  display: none;
+}
+
+.completed {
+  background-color: green;
+  color: #fff;
+}
+
+.check {
+  cursor: pointer;
 }
