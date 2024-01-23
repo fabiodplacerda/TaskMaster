@@ -4,7 +4,7 @@ import TaskInterface from '../interfaces/tasks';
 const AddTask = ({
   setTasks,
 }: {
-  setTasks: (currValue: Array<TaskInterface>) => void;
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
 }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
@@ -21,17 +21,15 @@ const AddTask = ({
 
   const submitTask = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTasks((curr: Array<TaskInterface>) => {
-      return [
-        ...curr,
-        {
-          id: Math.random() * 10000,
-          title: titleInput,
-          description: descriptionInput,
-          completed: false,
-        },
-      ];
-    });
+    setTasks((curr: TaskInterface[]) => [
+      ...curr,
+      {
+        id: Math.random() * 10000,
+        title: titleInput,
+        description: descriptionInput,
+        completed: false,
+      },
+    ]);
     setTitleInput('');
     setDescriptionInput('');
   };
@@ -55,7 +53,7 @@ const AddTask = ({
         onChange={descriptionHandler}
         value={descriptionInput}
       ></textarea>
-      <button>Submit task</button>
+      <button type="submit">Submit task</button>
     </form>
   );
 };
