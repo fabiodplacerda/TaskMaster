@@ -23,10 +23,10 @@ const TaskList = () => {
 
   return (
     <>
-      <ul>
+      <ul id="tasks-list">
         {tasks.map(task => {
           return (
-            <li key={task.id}>
+            <li key={task.id} className="task-container">
               <Task task={task} />
             </li>
           );
