@@ -1,6 +1,7 @@
 import Popup from 'reactjs-popup';
 import { SetStateAction, useState } from 'react';
 import TaskInterface from '../interfaces/tasks';
+import Button from '@mui/material/Button';
 
 const DeletePopup = ({
   taskId,
@@ -19,9 +20,15 @@ const DeletePopup = ({
   };
   return (
     <div>
-      <button type="button" className="button" onClick={() => setOpen(o => !o)}>
+      <Button
+        type="button"
+        className="button"
+        onClick={() => setOpen(o => !o)}
+        variant="outlined"
+        color="error"
+      >
         Delete
-      </button>
+      </Button>
       <Popup open={open} closeOnDocumentClick onClose={closeModal}>
         <div className="modal">
           <button className="close" onClick={closeModal}>
@@ -33,8 +40,12 @@ const DeletePopup = ({
           <p className="delete-modal-text">
             Once deleted, this task will no longer be available.
           </p>
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={deleteTask}>Delete Task</button>
+          <Button onClick={closeModal} variant="contained">
+            Cancel
+          </Button>
+          <Button onClick={deleteTask} variant="outlined" color="error">
+            Delete Task
+          </Button>
         </div>
       </Popup>
     </div>
