@@ -77,3 +77,33 @@ h1 {
 .task-container.selected .btn-container {
   display: block;
 }
+
+.modal {
+  position: relative;
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.delete-modal-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.delete-modal-text {
+  font-size: 1.2rem;
+}
+
+.close {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -1rem;
+  top: -1.2rem;
+  border: 0;
+}

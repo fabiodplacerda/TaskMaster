@@ -1,16 +1,15 @@
 import TaskInterface from '../interfaces/tasks';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SelectedTask from '../interfaces/selected';
+
 const Task = ({
   task,
   markHasCompleted,
-  setIsEditing,
   selected,
   setSelected,
 }: {
   task: TaskInterface;
   markHasCompleted: (taskId: number) => void;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   selected: SelectedTask;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
 }) => {
@@ -47,18 +46,6 @@ const Task = ({
           />
         </div>
         <p className="task-description">{task.description}</p>
-      </div>
-      <div className="btn-container">
-        <button>Delete</button>
-        <button
-          onClick={() => {
-            setIsEditing(curr => {
-              return !curr;
-            });
-          }}
-        >
-          Edit
-        </button>
       </div>
     </>
   );
