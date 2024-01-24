@@ -16,6 +16,11 @@ h1 {
   margin: 3rem auto;
 }
 
+#no-tasks-text {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
 #tasks-list {
   margin-top: 2rem;
   display: flex;
