@@ -16,6 +16,13 @@ h1 {
   margin: 3rem auto;
 }
 
+#no-tasks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
 #no-tasks-text {
   text-align: center;
   font-size: 1.2rem;
@@ -30,6 +37,7 @@ h1 {
   align-items: center;
 }
 
+/* TASK CONTAINER */
 .task-container {
   border: 0.1rem solid black;
   width: 30rem;
@@ -83,6 +91,57 @@ h1 {
   display: block;
 }
 
+/* ADD TASK STYLES */
+
+#add-button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#add-button:hover {
+  color: #c3c3c3;
+}
+
+.modal-add-task #form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#form label {
+  font-size: 2rem;
+}
+
+#form input {
+  padding: 1rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 30rem;
+  margin-bottom: 1rem;
+  border: 0.1rem solid black;
+}
+
+#form textarea {
+  padding: 2rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  width: 30rem;
+  margin-bottom: 1rem;
+  border: 0.1rem solid black;
+}
+
+/* #add-task-button {
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: green;
+  border: 0;
+  border-radius: 2rem;
+  color: white;
+} */
+
+.popup-content {
+  border-radius: 1rem;
+}
 .modal {
   position: relative;
   text-align: center;

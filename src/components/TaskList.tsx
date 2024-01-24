@@ -5,7 +5,6 @@ import TaskInterface from '../interfaces/tasks';
 import SelectedTask from '../interfaces/selected';
 import EditTask from './EditTask';
 import DeletePopup from './DeletePopup';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskInterface[]>([
@@ -39,11 +38,10 @@ const TaskList = () => {
 
   if (!tasks.length) {
     return (
-      <>
-        <AddCircleIcon />
-        <AddTask setTasks={setTasks} />
+      <div id="no-tasks-container">
         <p id="no-tasks-text">You have got not tasks at the moment</p>
-      </>
+        <AddTask setTasks={setTasks} />
+      </div>
     );
   }
 
@@ -80,9 +78,9 @@ const TaskList = () => {
             </li>
           );
         })}
-        <AddCircleIcon sx={{ fontSize: 40 }} />
+        <AddTask setTasks={setTasks} />
       </ul>
-      <AddTask setTasks={setTasks} />
+
       <EditTask
         selected={selected}
         setTasks={setTasks}
