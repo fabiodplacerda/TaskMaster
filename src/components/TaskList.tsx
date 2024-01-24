@@ -4,6 +4,7 @@ import AddTask from './AddTask';
 import TaskInterface from '../interfaces/tasks';
 import SelectedTask from '../interfaces/selected';
 import EditTask from './EditTask';
+import DeletePopup from './DeletePopup';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskInterface[]>([
@@ -32,16 +33,8 @@ const TaskList = () => {
       );
     });
   };
-
-  const taskSelection = task => {
-    if (task.id === selected.id) {
-      setSelected({});
-    } else {
-      setSelected(task);
-    }
-  };
-
-  console.log(selected);
+  console.log(tasks, 'task list');
+  console.log(selected, 'this was selected');
 
   return (
     <>
@@ -53,21 +46,38 @@ const TaskList = () => {
               className={`${
                 task.completed ? 'task-container completed' : 'task-container'
               } ${task.id === selected.id ? 'selected' : 'not-selected'}`}
-              onClick={() => {
-                taskSelection(task);
-              }}
+              onClick={() => {}}
             >
               <Task
                 task={task}
                 markHasCompleted={markHasCompleted}
-                setIsEditing={setIsEditing}
+                selected={selected}
+                setSelected={setSelected}
               />
+              <div className="btn-container">
+                <DeletePopup taskId={task.id} setTasks={setTasks} />
+                <button
+                  onClick={() => {
+                    setIsEditing(curr => {
+                      return !curr;
+                    });
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
             </li>
           );
         })}
       </ul>
       <AddTask setTasks={setTasks} />
-      <EditTask selected={selected} setTasks={setTasks} isEditing={isEditing} />
+      <EditTask
+        selected={selected}
+        setTasks={setTasks}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        setSelected={setSelected}
+      />
     </>
   );
 };
