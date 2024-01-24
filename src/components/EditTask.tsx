@@ -24,8 +24,8 @@ const EditTask = ({
 
   useEffect(() => {
     if (isEditing) {
-      setEditTitle(selected.title);
-      setEditDescription(selected.description);
+      setEditTitle(selected.title || '');
+      setEditDescription(selected.description || '');
       setShowForm(true);
     } else {
       setShowForm(false);
