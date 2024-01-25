@@ -1,0 +1,39 @@
+@media only screen and (max-width: 1200px) {
+  .form input {
+    width: 90%;
+  }
+
+  .form textArea {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .task-container {
+    width: 80%;
+  }
+
+  .popup-content {
+    width: 80%;
+  }
+
+  .task-title,
+  .task-description {
+    font-size: 90%;
+    text-align: center;
+  }
+
+  .form label {
+    font-size: 80%;
+  }
+
+  .req-text {
+    font-size: 35%;
+  }
+
+  .delete-modal-title {
+    font-size: 50%;
+  }
+  .delete-modal-text {
+    font-size: 40%;
+  }
+}
