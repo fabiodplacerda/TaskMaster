@@ -2,6 +2,8 @@ import Popup from 'reactjs-popup';
 import { SetStateAction, useState } from 'react';
 import TaskInterface from '../interfaces/tasks';
 import Button from '@mui/material/Button';
+import WarningIcon from '@mui/icons-material/Warning';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const DeletePopup = ({
   taskId,
@@ -12,11 +14,16 @@ const DeletePopup = ({
 }) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteTask = () => {
-    setTasks(currTasks => {
-      return currTasks.filter(task => task.id !== taskId);
-    });
+    setIsDeleting(true);
+    setTimeout(() => {
+      setTasks(currTasks => {
+        return currTasks.filter(task => task.id !== taskId);
+      });
+      setIsDeleting(false);
+    }, 500);
   };
   return (
     <div>
@@ -31,6 +38,7 @@ const DeletePopup = ({
       </Button>
       <Popup open={open} closeOnDocumentClick onClose={closeModal}>
         <div className="modal">
+          <WarningIcon sx={{ fontSize: 40, color: '#E34252' }} />
           <button className="close" onClick={closeModal}>
             X
           </button>
@@ -40,12 +48,20 @@ const DeletePopup = ({
           <p className="delete-modal-text">
             Once deleted, this task will no longer be available.
           </p>
-          <Button onClick={closeModal} variant="contained">
-            Cancel
-          </Button>
-          <Button onClick={deleteTask} variant="outlined" color="error">
-            Delete Task
-          </Button>
+          <div className="btn-container-delete">
+            <Button onClick={closeModal} variant="contained">
+              Cancel
+            </Button>
+            <LoadingButton
+              variant="outlined"
+              color="error"
+              onClick={deleteTask}
+              loading={isDeleting ? true : false}
+              loadingIndicator="deleting..."
+            >
+              Delete Task
+            </LoadingButton>
+          </div>
         </div>
       </Popup>
     </div>
