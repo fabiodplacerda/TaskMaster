@@ -53,7 +53,7 @@ const AddTask = ({
       setTasks((curr: TaskInterface[]) => [
         ...curr,
         {
-          id: Math.random() * 10000,
+          id: Math.floor(Math.random() * 100),
           title: titleInput,
           description: descriptionInput,
           completed: false,
@@ -101,7 +101,6 @@ const AddTask = ({
               id="description"
               cols={30}
               rows={5}
-              minLength={10}
               onChange={descriptionHandler}
               value={descriptionInput}
               placeholder="describe your task..."
