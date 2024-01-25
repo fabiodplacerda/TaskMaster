@@ -111,16 +111,16 @@ h1 {
   color: #c3c3c3;
 }
 
-.modal-add-task #form {
+.modal-add-task .form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#form label {
+.form label {
   font-size: 1.8rem;
 }
 
-#form input {
+.form input {
   padding: 1rem;
   border-radius: 2rem;
   font-size: 1.2rem;
@@ -129,7 +129,7 @@ h1 {
   border: 0.1rem solid black;
 }
 
-#form textarea {
+.form textarea {
   padding: 2rem;
   border-radius: 2rem;
   font-size: 1.2rem;

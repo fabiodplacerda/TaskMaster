@@ -83,7 +83,7 @@ const AddTask = ({
           <button className="close" onClick={closeModal}>
             X
           </button>
-          <form action="" onSubmit={submitTask} id="form">
+          <form action="" onSubmit={submitTask} className="form">
             <label htmlFor="title">Task Name</label>
             <input
               type="text"
