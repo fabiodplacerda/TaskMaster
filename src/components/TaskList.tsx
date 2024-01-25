@@ -5,6 +5,7 @@ import TaskInterface from '../interfaces/tasks';
 import SelectedTask from '../interfaces/selected';
 import EditTask from './EditTask';
 import DeletePopup from './DeletePopup';
+import Button from '@mui/material/Button';
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskInterface[]>([
@@ -64,8 +65,8 @@ const TaskList = () => {
                 setSelected={setSelected}
               />
               <div className="btn-container">
-                <DeletePopup taskId={task.id} setTasks={setTasks} />
-                <button
+                <Button
+                  variant="outlined"
                   onClick={() => {
                     setIsEditing(curr => {
                       return !curr;
@@ -73,7 +74,8 @@ const TaskList = () => {
                   }}
                 >
                   Edit
-                </button>
+                </Button>
+                <DeletePopup taskId={task.id} setTasks={setTasks} />
               </div>
             </li>
           );
