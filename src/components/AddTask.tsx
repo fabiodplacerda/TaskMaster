@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import TaskInterface from '../interfaces/tasks';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Button from '@mui/material/Button';
-
+import LoadingButton from '@mui/lab/LoadingButton';
 import Popup from 'reactjs-popup';
 
 const AddTask = ({
@@ -13,36 +12,65 @@ const AddTask = ({
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [open, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
+  const [titleReqChar, setTitleReqChar] = useState(false);
+  const [descriptionReqChar, setDescriptionReqChar] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+
+  const closeModal = () => {
+    setOpen(false);
+    setTitleInput('');
+    setDescriptionInput('');
+    setTitleReqChar(false);
+    setDescriptionReqChar(false);
+  };
 
   const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleInput(event.target.value);
+    const input = event.target.value;
+    setTitleInput(input);
+    if (input.length >= 5 && input.length <= 20) {
+      setTitleReqChar(true);
+    } else {
+      setTitleReqChar(false);
+    }
   };
 
   const descriptionHandler = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setDescriptionInput(event.target.value);
+    const textArea = event.target.value;
+    setDescriptionInput(textArea);
+    if (textArea.length >= 5 && textArea.length <= 100) {
+      setDescriptionReqChar(true);
+    } else {
+      setDescriptionReqChar(false);
+    }
   };
 
   const submitTask = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setTasks((curr: TaskInterface[]) => [
-      ...curr,
-      {
-        id: Math.random() * 10000,
-        title: titleInput,
-        description: descriptionInput,
-        completed: false,
-      },
-    ]);
-    setTitleInput('');
-    setDescriptionInput('');
-    setOpen(false);
+    setIsAdding(true);
+    setTimeout(() => {
+      setTasks((curr: TaskInterface[]) => [
+        ...curr,
+        {
+          id: Math.random() * 10000,
+          title: titleInput,
+          description: descriptionInput,
+          completed: false,
+        },
+      ]);
+      setTitleInput('');
+      setDescriptionInput('');
+      setOpen(false);
+      setDescriptionReqChar(false);
+      setTitleReqChar(false);
+      setIsAdding(false);
+    }, 800);
   };
 
   return (
-    <div>
+    <div id="add-task-container">
+      <p>Add a new task</p>
       <AddCircleIcon
         sx={{ fontSize: 40 }}
         type="button"
@@ -50,21 +78,23 @@ const AddTask = ({
         onClick={() => setOpen(o => !o)}
         id="add-button"
       />
-
       <Popup open={open} closeOnDocumentClick onClose={closeModal}>
         <div className="modal modal-add-task">
           <button className="close" onClick={closeModal}>
             X
           </button>
           <form action="" onSubmit={submitTask} id="form">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Task Name</label>
             <input
               type="text"
               id="title"
-              placeholder="Task name"
+              placeholder="name your task"
               onChange={titleHandler}
               value={titleInput}
             />
+            <p className="req-text">please enter between 5 - 20 characters</p>
+            <p className="req-text">{titleInput.length} of 20 char</p>
+
             <label htmlFor="description">Description</label>
             <textarea
               name="description"
@@ -74,10 +104,19 @@ const AddTask = ({
               minLength={10}
               onChange={descriptionHandler}
               value={descriptionInput}
+              placeholder="describe your task..."
             ></textarea>
-            <Button type="submit" variant="contained" color="success">
+            <p className="req-text">please enter between 5 - 100 characters</p>
+            <p className="req-text">{descriptionInput.length} of 100 char</p>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              color="success"
+              loading={isAdding ? true : false}
+              disabled={titleReqChar && descriptionReqChar ? false : true}
+            >
               Submit task
-            </Button>
+            </LoadingButton>
           </form>
         </div>
       </Popup>

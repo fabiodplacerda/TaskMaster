@@ -88,10 +88,19 @@ h1 {
 }
 
 .task-container.selected .btn-container {
-  display: block;
+  display: flex;
+  gap: 1rem;
 }
 
 /* ADD TASK STYLES */
+
+#add-task-container {
+  display: flex;
+  gap: 0.8rem;
+  position: relative;
+  align-items: center;
+  font-size: 1.2rem;
+}
 
 #add-button {
   cursor: pointer;
@@ -108,16 +117,15 @@ h1 {
   align-items: center;
 }
 #form label {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 #form input {
   padding: 1rem;
   border-radius: 2rem;
   font-size: 1.2rem;
-  text-align: center;
   width: 30rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   border: 0.1rem solid black;
 }
 
@@ -126,18 +134,17 @@ h1 {
   border-radius: 2rem;
   font-size: 1.2rem;
   width: 30rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   border: 0.1rem solid black;
 }
 
-/* #add-task-button {
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: green;
-  border: 0;
-  border-radius: 2rem;
-  color: white;
-} */
+.req-text {
+  font-size: 0.8rem;
+}
+
+.req-text:last-of-type {
+  margin-bottom: 1rem;
+}
 
 .popup-content {
   border-radius: 1rem;
@@ -147,6 +154,15 @@ h1 {
   text-align: center;
   padding: 2rem;
   font-size: 2rem;
+}
+
+/* DELETE TASK STYLES */
+
+.btn-container-delete {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.6rem;
 }
 
 .delete-modal-title {
