@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import TaskInterface from '../interfaces/tasks';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Popup from 'reactjs-popup';
-
+// import Popup from 'reactjs-popup';
+import Calendar from './Calendar';
 const AddTask = ({
   setTasks,
 }: {
@@ -16,18 +18,10 @@ const AddTask = ({
   const [descriptionReqChar, setDescriptionReqChar] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
-  const closeModal = () => {
-    setOpen(false);
-    setTitleInput('');
-    setDescriptionInput('');
-    setTitleReqChar(false);
-    setDescriptionReqChar(false);
-  };
-
   const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setTitleInput(input);
-    if (input.length >= 5 && input.length <= 20) {
+    if (input.length >= 5 && input.length <= 30) {
       setTitleReqChar(true);
     } else {
       setTitleReqChar(false);
@@ -68,59 +62,76 @@ const AddTask = ({
     }, 800);
   };
 
-  return (
-    <div id="add-task-container">
-      <p>Add a new task</p>
-      <AddCircleIcon
-        sx={{ fontSize: 40 }}
-        type="button"
-        className="button"
-        onClick={() => setOpen(o => !o)}
-        id="add-button"
-      />
-      <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-        <div className="modal modal-add-task">
-          <button className="close" onClick={closeModal}>
-            X
-          </button>
+  if (open) {
+    return (
+      <>
+        <div id="add-task-container">
           <form action="" onSubmit={submitTask} className="form">
-            <label htmlFor="title">Task Name</label>
-            <input
-              type="text"
-              id="title"
-              placeholder="name your task"
-              onChange={titleHandler}
-              value={titleInput}
-            />
-            <p className="req-text">please enter between 5 - 20 characters</p>
-            <p className="req-text">{titleInput.length} of 20 char</p>
+            <div className="input-container">
+              <TextField
+                id="outlined-basic"
+                label="Task Name"
+                variant="outlined"
+                onChange={titleHandler}
+                value={titleInput}
+              />
+              <p className="req-text">Please enter between 5 - 30 characters</p>
+              <p className="req-text">{titleInput.length} of 30 char</p>
+            </div>
+            <div className="input-container">
+              <TextField
+                id="outlined-multiline-static"
+                label="Description"
+                multiline
+                rows={5}
+                onChange={descriptionHandler}
+                value={descriptionInput}
+              />
+              <p className="req-text">
+                Please enter between 5 - 100 characters
+              </p>
+              <p className="req-text">{descriptionInput.length} of 100 char</p>
+            </div>
 
-            <label htmlFor="description">Description</label>
-            <textarea
-              name="description"
-              id="description"
-              cols={30}
-              rows={5}
-              onChange={descriptionHandler}
-              value={descriptionInput}
-              placeholder="describe your task..."
-            ></textarea>
-            <p className="req-text">please enter between 5 - 100 characters</p>
-            <p className="req-text">{descriptionInput.length} of 100 char</p>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              color="success"
-              loading={isAdding ? true : false}
-              disabled={titleReqChar && descriptionReqChar ? false : true}
-            >
-              Submit task
-            </LoadingButton>
+            <Calendar />
+            <div className="btn-container-add">
+              <Button
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                color="success"
+                loading={isAdding ? true : false}
+                disabled={titleReqChar && descriptionReqChar ? false : true}
+              >
+                Submit task
+              </LoadingButton>
+            </div>
           </form>
         </div>
-      </Popup>
-    </div>
-  );
+      </>
+    );
+  } else {
+    return (
+      <div id="add-task-btn">
+        <p>Add a new task</p>
+        <AddCircleIcon
+          sx={{ fontSize: 40 }}
+          type="button"
+          className="button"
+          id="add-button"
+          onClick={() => {
+            setOpen(true);
+          }}
+        />
+      </div>
+    );
+  }
 };
 
 export default AddTask;
