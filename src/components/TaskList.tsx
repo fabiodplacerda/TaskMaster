@@ -14,6 +14,7 @@ const TaskList = () => {
       completed: false,
       description:
         'Learn all about TypeScript, is functionalities, types interfaces and more! ',
+      dueDate: '2024-01-27T00:00:00.000Z',
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ const TaskList = () => {
       completed: false,
       description:
         'Reinforce my understanding of TypeScript through practical exercises to strengthen my skills.',
+      dueDate: '2024-01-28T00:00:00.000Z',
     },
   ]);
   const [selected, setSelected] = useState<SelectedTask>({ id: 0 });

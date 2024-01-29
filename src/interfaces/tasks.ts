@@ -3,6 +3,7 @@ interface TaskInterface {
   title: string;
   description: string;
   completed: boolean;
+  dueDate: string;
 }
 
 export default TaskInterface;

@@ -86,6 +86,19 @@ h1 {
   font-size: 1.3rem;
 }
 
+.due-date {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.overdue {
+  color: red;
+}
+
+.on-time {
+  color: #66bb69;
+}
+
 .task-id {
   position: absolute;
   top: 0.3rem;
@@ -104,6 +117,11 @@ h1 {
 .completed {
   background-color: #66bb69;
   color: #fff;
+}
+
+.completed .overdue,
+.completed .on-time {
+  color: inherit;
 }
 
 .check {
@@ -134,6 +152,7 @@ h1 {
 /* ADD TASK STYLES */
 #add-task-btn {
   margin-top: 1rem;
+  margin-bottom: 5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
