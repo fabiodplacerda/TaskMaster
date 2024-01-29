@@ -45,7 +45,7 @@ const Task = ({
         }
         break;
     }
-  }, []);
+  }, [task.dueDate]);
 
   const taskSelection = (task: SelectedTask) => {
     if (task.id === selected.id) {

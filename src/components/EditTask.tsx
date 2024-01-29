@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
-import Popup from 'reactjs-popup';
+
 import SelectedTask from '../interfaces/selected';
 import TaskInterface from '../interfaces/tasks';
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
+import TextField from '@mui/material/TextField';
+import Calendar from './Calendar';
+import dayjs, { Dayjs } from 'dayjs';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
+import moment from 'moment';
 
 const EditTask = ({
   selected,
@@ -25,6 +31,9 @@ const EditTask = ({
   const [titleReqChar, setTitleReqChar] = useState(false);
   const [descriptionReqChar, setDescriptionReqChar] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [dueDate, setDueDate] = useState<Dayjs | null>(dayjs());
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const closeModal = () => {
     setOpen(false);
     setIsEditing(false);
@@ -32,20 +41,26 @@ const EditTask = ({
     setDescriptionReqChar(false);
   };
 
-  console.log(editTitle, 'Title to be edited');
-  console.log(editDescription, 'Description to be edited');
+  // console.log(editTitle, 'Title to be edited');
+  // console.log(editDescription, 'Description to be edited');
 
   useEffect(() => {
     if (isEditing) {
       setEditTitle(selected.title || '');
       setEditDescription(selected.description || '');
-      // setShowForm(true);
     } else {
-      // setShowForm(false);
       setEditTitle('');
       setEditDescription('');
     }
   }, [isEditing]);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget.closest('li'));
+    setOpen(previousOpen => !previousOpen);
+  };
+
+  const canBeOpen = open && Boolean(anchorEl);
+  const id = canBeOpen ? 'transition-popper' : undefined;
 
   const editTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
@@ -76,7 +91,12 @@ const EditTask = ({
       setTasks((currValue: TaskInterface[]) => {
         return currValue.map(task => {
           if (task.id === selected.id) {
-            return { ...task, title: editTitle, description: editDescription };
+            return {
+              ...task,
+              title: editTitle,
+              description: editDescription,
+              dueDate: moment(dueDate!.toDate()).startOf('day').toISOString(),
+            };
           } else {
             return task;
           }
@@ -96,57 +116,147 @@ const EditTask = ({
       <Button
         type="button"
         className="button"
-        onClick={() => {
+        onClick={event => {
+          handleClick(event);
           setIsEditing(curr => {
             return !curr;
           });
-          setOpen(o => !o);
         }}
         variant="outlined"
+        aria-describedby={id}
       >
         EDIT
       </Button>
-      <Popup open={open} closeOnDocumentClick onClose={closeModal}>
-        <div className="modal modal-add-task">
-          <button className="close" onClick={closeModal}>
-            X
-          </button>
-          <form action="" onSubmit={saveHandler} className="form">
-            <label htmlFor="edit-title">Task Name</label>
-            <input
-              type="text"
-              id="edit-title"
-              value={editTitle}
-              onChange={editTitleHandler}
-            />
-            <p className="req-text">please enter between 5 - 30 characters</p>
-            <p className="req-text">{editTitle.length} of 30 char</p>
-            <label htmlFor="edit-description">Description</label>
-            <textarea
-              name="edit-description"
-              id="edit-description"
-              cols={30}
-              rows={5}
-              value={editDescription}
-              onChange={editDescriptionHandler}
-              placeholder="describe your task..."
-            ></textarea>
-            <p className="req-text">please enter between 5 - 100 characters</p>
-            <p className="req-text">{editDescription.length} of 100 char</p>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              color="success"
-              loading={isSaving ? true : false}
-              disabled={titleReqChar && descriptionReqChar ? false : true}
-            >
-              Save
-            </LoadingButton>
-          </form>
-        </div>
-      </Popup>
+      <Popper id={id} open={open} anchorEl={anchorEl} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <div id="add-task-container">
+              <form action="" onSubmit={saveHandler} className="form">
+                <div className="input-container">
+                  <TextField
+                    id="outlined-basic"
+                    label="Task Name"
+                    variant="outlined"
+                    onChange={editTitleHandler}
+                    value={editTitle}
+                  />
+                  <p className="req-text">
+                    Please enter between 5 - 30 characters
+                  </p>
+                  <p className="req-text">{editTitle.length} of 30 char</p>
+                </div>
+
+                <div className="input-container">
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description"
+                    multiline
+                    rows={5}
+                    onChange={editDescriptionHandler}
+                    value={editDescription}
+                  />
+                  <p className="req-text">
+                    Please enter between 5 - 100 characters
+                  </p>
+                  <p className="req-text">
+                    {editDescription.length} of 100 char
+                  </p>
+                </div>
+
+                <Calendar dueDate={dueDate} setDueDate={setDueDate} />
+
+                <div className="btn-container-add">
+                  <Button onClick={closeModal}>Cancel</Button>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    color="success"
+                    loading={isSaving ? true : false}
+                    disabled={titleReqChar && descriptionReqChar ? false : true}
+                  >
+                    Save
+                  </LoadingButton>
+                </div>
+              </form>
+            </div>
+          </Fade>
+        )}
+      </Popper>
     </div>
   );
 };
 
 export default EditTask;
+
+// if (open) {
+//   return (
+//     <div id="add-task-container">
+//       <button className="close" onClick={closeModal}>
+//         X
+//       </button>
+//       <form action="" onSubmit={saveHandler} className="form">
+//         <div className="input-container">
+//           <TextField
+//             id="outlined-basic"
+//             label="Task Name"
+//             variant="outlined"
+//             onChange={editTitleHandler}
+//             value={editTitle}
+//           />
+//           <p className="req-text">Please enter between 5 - 30 characters</p>
+//           <p className="req-text">{editTitle.length} of 30 char</p>
+//         </div>
+
+//         <div className="input-container">
+//           <TextField
+//             id="outlined-multiline-static"
+//             label="Description"
+//             multiline
+//             rows={5}
+//             onChange={editDescriptionHandler}
+//             value={editDescription}
+//           />
+//           <p className="req-text">Please enter between 5 - 100 characters</p>
+//           <p className="req-text">{editDescription.length} of 100 char</p>
+//         </div>
+
+//         <Calendar dueDate={dueDate} setDueDate={setDueDate} />
+
+//         <div className="btn-container-add">
+//           <Button
+//             onClick={() => {
+//               setOpen(false);
+//             }}
+//           >
+//             Cancel
+//           </Button>
+//           <LoadingButton
+//             type="submit"
+//             variant="contained"
+//             color="success"
+//             loading={isSaving ? true : false}
+//             disabled={titleReqChar && descriptionReqChar ? false : true}
+//           >
+//             Save
+//           </LoadingButton>
+//         </div>
+//       </form>
+//     </div>
+//   );
+// } else {
+//   return (
+//     <Button
+//       type="button"
+//       className="button"
+//       onClick={() => {
+//         setIsEditing(curr => {
+//           return !curr;
+//         });
+//         setOpen(true);
+//       }}
+//       variant="outlined"
+//     >
+//       EDIT
+//     </Button>
+//   );
+// }

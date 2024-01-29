@@ -35,14 +35,14 @@ const TaskList = () => {
       );
     });
   };
-  console.log(tasks, 'task list');
+  // console.log(tasks, 'task list');
   console.log(selected, 'this was selected');
 
   if (!tasks.length) {
     return (
       <div id="no-tasks-container">
         <p id="no-tasks-text">You have got not tasks at the moment</p>
-        <AddTask setTasks={setTasks} />
+        <AddTask setTasks={setTasks} setSelected={setSelected} />
       </div>
     );
   }
@@ -78,7 +78,7 @@ const TaskList = () => {
             </li>
           );
         })}
-        <AddTask setTasks={setTasks} />
+        <AddTask setTasks={setTasks} setSelected={setSelected} />
       </ul>
     </>
   );

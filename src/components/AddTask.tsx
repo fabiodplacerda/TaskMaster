@@ -7,11 +7,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import dayjs, { Dayjs } from 'dayjs';
 import Calendar from './Calendar';
 import moment from 'moment';
+import SelectedTask from '../interfaces/selected';
 
 const AddTask = ({
   setTasks,
+  setSelected,
 }: {
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
+  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
 }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
@@ -69,6 +72,7 @@ const AddTask = ({
 
   const handleAddButtonClick = () => {
     setOpen(true);
+    setSelected({ id: 0 });
     setTimeout(() => {
       window.scrollTo({
         top: document.body.scrollHeight,
