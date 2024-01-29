@@ -4,8 +4,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
-// import Popup from 'reactjs-popup';
+import dayjs, { Dayjs } from 'dayjs';
 import Calendar from './Calendar';
+import moment from 'moment';
+
 const AddTask = ({
   setTasks,
 }: {
@@ -17,6 +19,7 @@ const AddTask = ({
   const [titleReqChar, setTitleReqChar] = useState(false);
   const [descriptionReqChar, setDescriptionReqChar] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const [dueDate, setDueDate] = useState<Dayjs | null>(dayjs());
 
   const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
@@ -51,6 +54,7 @@ const AddTask = ({
           title: titleInput,
           description: descriptionInput,
           completed: false,
+          dueDate: moment(dueDate!.toDate()).startOf('day').toISOString(),
         },
       ]);
       setTitleInput('');
@@ -59,12 +63,23 @@ const AddTask = ({
       setDescriptionReqChar(false);
       setTitleReqChar(false);
       setIsAdding(false);
+      setDueDate(dayjs());
     }, 800);
   };
 
-  if (open) {
-    return (
-      <>
+  const handleAddButtonClick = () => {
+    setOpen(true);
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 50);
+  };
+
+  return (
+    <>
+      {open ? (
         <div id="add-task-container">
           <form action="" onSubmit={submitTask} className="form">
             <div className="input-container">
@@ -93,7 +108,7 @@ const AddTask = ({
               <p className="req-text">{descriptionInput.length} of 100 char</p>
             </div>
 
-            <Calendar />
+            <Calendar dueDate={dueDate} setDueDate={setDueDate} />
             <div className="btn-container-add">
               <Button
                 onClick={() => {
@@ -114,24 +129,20 @@ const AddTask = ({
             </div>
           </form>
         </div>
-      </>
-    );
-  } else {
-    return (
-      <div id="add-task-btn">
-        <p>Add a new task</p>
-        <AddCircleIcon
-          sx={{ fontSize: 40 }}
-          type="button"
-          className="button"
-          id="add-button"
-          onClick={() => {
-            setOpen(true);
-          }}
-        />
-      </div>
-    );
-  }
+      ) : (
+        <div id="add-task-btn">
+          <p>Add a new task</p>
+          <AddCircleIcon
+            sx={{ fontSize: 40 }}
+            type="button"
+            className="button"
+            id="add-button"
+            onClick={handleAddButtonClick}
+          />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default AddTask;
