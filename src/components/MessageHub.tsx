@@ -41,14 +41,14 @@ export default function MessageHub({
       await next({ life: '0%' });
     },
     leave: [{ opacity: 0 }, { height: 0 }],
-    onRest: (result, ctrl, item) => {
+    onRest: (_result, _ctrl, item) => {
       setItems(state =>
         state.filter(i => {
           return i.key !== item.key;
         }),
       );
     },
-    config: (item, index, phase) => key =>
+    config: (_item, _index, phase) => key =>
       phase === 'enter' && key === 'life' ? { duration: timeout } : config,
   });
 

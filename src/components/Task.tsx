@@ -17,7 +17,7 @@ const Task = ({
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [day, setDay] = useState(moment().startOf('day'));
+  const [day] = useState(moment().startOf('day'));
   const [dueDate, setDueDate] = useState('');
   const [overdue, setOverdue] = useState(false);
 
