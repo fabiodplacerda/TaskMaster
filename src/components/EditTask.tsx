@@ -106,7 +106,7 @@ const EditTask = ({
           }
         });
       });
-      setSelected({ id: 0 });
+      setSelected({});
       setIsEditing(false);
       setEditDescription('');
       setEditTitle('');

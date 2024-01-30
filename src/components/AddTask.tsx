@@ -78,7 +78,7 @@ const AddTask = ({
 
   const handleAddButtonClick = () => {
     setOpenAdder(true);
-    setSelected({ id: 0 });
+    setSelected({});
     setTimeout(() => {
       window.scrollTo({
         top: document.body.scrollHeight,

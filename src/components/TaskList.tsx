@@ -29,7 +29,7 @@ const TaskList = () => {
     },
   ]);
 
-  const [selected, setSelected] = useState<SelectedTask>({ id: 0 });
+  const [selected, setSelected] = useState<SelectedTask>({});
   const [isEditing, setIsEditing] = useState(false);
   const [openAdder, setOpenAdder] = useState(false);
 

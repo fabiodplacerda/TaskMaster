@@ -40,7 +40,6 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  /* height: 100vh; */
   align-items: center;
 }
 
@@ -48,7 +47,6 @@ h1 {
 .task-container {
   width: 30rem;
   min-height: 7rem;
-  max-height: 13rem;
   padding: 1.2rem;
   border-radius: 1rem;
   transition: all 0.2s ease;
@@ -56,14 +54,11 @@ h1 {
   background-color: #eeebeb;
   color: #000;
   cursor: pointer;
+  overflow: auto;
 }
 
 .task-container:hover {
   transform: scale(1.03);
-}
-
-.task-container.selected {
-  min-height: 13rem;
 }
 
 .task-container.completed button {
@@ -132,15 +127,9 @@ h1 {
 }
 
 .btn-container {
+  display: flex;
   gap: 1rem;
   display: flex;
-  opacity: 0;
-  transition: all 0.3s ease;
-}
-
-.task-container.selected .btn-container {
-  display: flex;
-  opacity: 1;
 }
 
 /* ADD TASK STYLES */
