@@ -10,16 +10,22 @@
 body {
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  background-color: #fbab7e;
+  /* background-color: #fbab7e;
   background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
-  background-attachment: fixed;
+  background-attachment: fixed; */
 }
 
 h1 {
   text-align: center;
-  margin: 3rem auto;
+  margin: 0 auto;
+  padding: 3rem 0;
   color: #fafafa;
   font-size: 3rem;
+}
+
+.app {
+  min-height: 100vh;
+  position: relative;
 }
 
 #no-tasks-container {
@@ -226,4 +232,39 @@ h1 {
   right: -1rem;
   top: -1.2rem;
   border: 0;
+}
+
+#theme-toggler-container {
+  width: 6.5rem;
+  height: 3.3em;
+  border-radius: 10rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 3rem;
+  right: 5rem;
+}
+
+#theme-toggler {
+  width: 2.8rem;
+  height: 2.8rem;
+  margin: 0.2rem;
+  border-radius: 5rem;
+  background-color: #222831;
+  border: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all 0.2s ease-in;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#theme-toggler.dark {
+  transform: translate(3.3rem);
+  background-color: white;
+  color: #222831;
 }
