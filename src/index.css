@@ -145,7 +145,7 @@ h1 {
   font-size: 1.3rem;
   color: #fff;
 }
-#add-task-container {
+.form-container {
   width: 30rem;
   border-radius: 1.5rem;
   background-color: #eeebeb;

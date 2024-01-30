@@ -90,7 +90,7 @@ const AddTask = ({
   return (
     <>
       {openAdder ? (
-        <div id="add-task-container">
+        <div className="form-container">
           <form action="" onSubmit={submitTask} className="form">
             <div className="input-container">
               <TextField

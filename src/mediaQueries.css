@@ -27,8 +27,8 @@
     width: 80%;
   }
 
-  #add-task-container {
-    width: 80%;
+  .form-container {
+    width: 100%;
   }
   .task-title,
   .task-description {

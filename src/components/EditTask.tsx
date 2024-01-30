@@ -49,9 +49,6 @@ const EditTask = ({
     reference.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   };
 
-  // console.log(editTitle, 'Title to be edited');
-  // console.log(editDescription, 'Description to be edited');
-
   useEffect(() => {
     if (isEditing) {
       setEditTitle(selected.title || '');
@@ -146,7 +143,11 @@ const EditTask = ({
       <Popper id={id} open={open} anchorEl={anchorEl} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
-            <div id="add-task-container" ref={reference}>
+            <div
+              id="edit-task-container"
+              ref={reference}
+              className="form-container"
+            >
               <form action="" onSubmit={saveHandler} className="form">
                 <div className="input-container">
                   <TextField
