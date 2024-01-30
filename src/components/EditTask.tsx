@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import SelectedTask from '../interfaces/selected';
 import TaskInterface from '../interfaces/tasks';
 import Button from '@mui/material/Button';
@@ -18,6 +17,7 @@ const EditTask = ({
   setIsEditing,
   setSelected,
   setOpenAdder,
+  messageEvent,
 }: {
   selected: SelectedTask;
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
@@ -25,6 +25,7 @@ const EditTask = ({
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
   setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  messageEvent: (msg: string) => void;
 }) => {
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
@@ -91,6 +92,7 @@ const EditTask = ({
     setIsSaving(true);
     setTimeout(() => {
       setTasks((currValue: TaskInterface[]) => {
+        messageEvent('Task Saved!');
         return currValue.map(task => {
           if (task.id === selected.id) {
             return {

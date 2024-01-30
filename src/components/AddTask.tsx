@@ -14,11 +14,13 @@ const AddTask = ({
   setSelected,
   openAdder,
   setOpenAdder,
+  messageEvent,
 }: {
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
   openAdder: boolean;
   setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  messageEvent: (msg: string) => void;
 }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
@@ -53,6 +55,7 @@ const AddTask = ({
     event.preventDefault();
     setIsAdding(true);
     setTimeout(() => {
+      messageEvent('Task successfully added!');
       setTasks((curr: TaskInterface[]) => [
         ...curr,
         {

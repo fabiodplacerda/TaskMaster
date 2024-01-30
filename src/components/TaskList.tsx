@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Task from './Task';
 import AddTask from './AddTask';
 import TaskInterface from '../interfaces/tasks';
 import SelectedTask from '../interfaces/selected';
 import EditTask from './EditTask';
 import DeletePopup from './DeletePopup';
+import MessageHub from './MessageHub';
+
+type AddFunction = (msg: string) => void;
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<TaskInterface[]>([
@@ -25,9 +28,17 @@ const TaskList = () => {
       dueDate: '2024-01-28T00:00:00.000Z',
     },
   ]);
+
   const [selected, setSelected] = useState<SelectedTask>({ id: 0 });
   const [isEditing, setIsEditing] = useState(false);
   const [openAdder, setOpenAdder] = useState(false);
+
+  const ref = useRef<null | AddFunction>(null);
+
+  const messageEvent = (msg: string) => {
+    ref.current?.(msg);
+  };
+
   const markHasCompleted = (taskId: number) => {
     setTasks(previousArray => {
       return previousArray.map(task =>
@@ -47,6 +58,7 @@ const TaskList = () => {
           setSelected={setSelected}
           openAdder={openAdder}
           setOpenAdder={setOpenAdder}
+          messageEvent={messageEvent}
         />
       </div>
     );
@@ -80,8 +92,13 @@ const TaskList = () => {
                     setIsEditing={setIsEditing}
                     setSelected={setSelected}
                     setOpenAdder={setOpenAdder}
+                    messageEvent={messageEvent}
                   />
-                  <DeletePopup taskId={task.id} setTasks={setTasks} />
+                  <DeletePopup
+                    taskId={task.id}
+                    setTasks={setTasks}
+                    messageEvent={messageEvent}
+                  />
                 </div>
               )}
             </li>
@@ -92,8 +109,14 @@ const TaskList = () => {
           setSelected={setSelected}
           openAdder={openAdder}
           setOpenAdder={setOpenAdder}
+          messageEvent={messageEvent}
         />
       </ul>
+      <MessageHub
+        children={(add: AddFunction) => {
+          ref.current = add;
+        }}
+      />
     </>
   );
 };
