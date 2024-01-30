@@ -14,6 +14,7 @@ const TaskList = () => {
       completed: false,
       description:
         'Learn all about TypeScript, is functionalities, types interfaces and more! ',
+      dueDate: '2024-01-27T00:00:00.000Z',
     },
     {
       id: 2,
@@ -21,11 +22,12 @@ const TaskList = () => {
       completed: false,
       description:
         'Reinforce my understanding of TypeScript through practical exercises to strengthen my skills.',
+      dueDate: '2024-01-28T00:00:00.000Z',
     },
   ]);
   const [selected, setSelected] = useState<SelectedTask>({ id: 0 });
   const [isEditing, setIsEditing] = useState(false);
-
+  const [openAdder, setOpenAdder] = useState(false);
   const markHasCompleted = (taskId: number) => {
     setTasks(previousArray => {
       return previousArray.map(task =>
@@ -33,14 +35,19 @@ const TaskList = () => {
       );
     });
   };
-  console.log(tasks, 'task list');
+
   console.log(selected, 'this was selected');
 
   if (!tasks.length) {
     return (
       <div id="no-tasks-container">
         <p id="no-tasks-text">You have got not tasks at the moment</p>
-        <AddTask setTasks={setTasks} />
+        <AddTask
+          setTasks={setTasks}
+          setSelected={setSelected}
+          openAdder={openAdder}
+          setOpenAdder={setOpenAdder}
+        />
       </div>
     );
   }
@@ -62,21 +69,30 @@ const TaskList = () => {
                 markHasCompleted={markHasCompleted}
                 selected={selected}
                 setSelected={setSelected}
+                setIsEditing={setIsEditing}
               />
-              <div className="btn-container">
-                <EditTask
-                  selected={selected}
-                  setTasks={setTasks}
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  setSelected={setSelected}
-                />
-                <DeletePopup taskId={task.id} setTasks={setTasks} />
-              </div>
+              {task.id === selected.id && (
+                <div className="btn-container">
+                  <EditTask
+                    selected={selected}
+                    setTasks={setTasks}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    setSelected={setSelected}
+                    setOpenAdder={setOpenAdder}
+                  />
+                  <DeletePopup taskId={task.id} setTasks={setTasks} />
+                </div>
+              )}
             </li>
           );
         })}
-        <AddTask setTasks={setTasks} />
+        <AddTask
+          setTasks={setTasks}
+          setSelected={setSelected}
+          openAdder={openAdder}
+          setOpenAdder={setOpenAdder}
+        />
       </ul>
     </>
   );
