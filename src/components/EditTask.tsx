@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import SelectedTask from '../interfaces/selected';
 import TaskInterface from '../interfaces/tasks';
 import Button from '@mui/material/Button';
@@ -36,11 +36,17 @@ const EditTask = ({
   const [dueDate, setDueDate] = useState<Dayjs | null>(dayjs());
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const reference = useRef<HTMLDivElement | null>(null);
+
   const closeModal = () => {
     setOpen(false);
     setIsEditing(false);
     setTitleReqChar(false);
     setDescriptionReqChar(false);
+  };
+
+  const scrollFormToBottom = () => {
+    reference.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   };
 
   // console.log(editTitle, 'Title to be edited');
@@ -54,7 +60,13 @@ const EditTask = ({
       setEditTitle('');
       setEditDescription('');
     }
-  }, [isEditing]);
+
+    if (open) {
+      setTimeout(() => {
+        scrollFormToBottom();
+      }, 100);
+    }
+  }, [isEditing, open]);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget.closest('li'));
@@ -121,7 +133,6 @@ const EditTask = ({
         type="button"
         className="button"
         onClick={event => {
-          console.log(open);
           handleClick(event);
           setIsEditing(curr => {
             return !curr;
@@ -135,7 +146,7 @@ const EditTask = ({
       <Popper id={id} open={open} anchorEl={anchorEl} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
-            <div id="add-task-container">
+            <div id="add-task-container" ref={reference}>
               <form action="" onSubmit={saveHandler} className="form">
                 <div className="input-container">
                   <TextField
