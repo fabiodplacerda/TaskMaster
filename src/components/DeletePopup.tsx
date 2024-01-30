@@ -8,9 +8,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 const DeletePopup = ({
   taskId,
   setTasks,
+  messageEvent,
 }: {
   taskId: number;
   setTasks: React.Dispatch<SetStateAction<TaskInterface[]>>;
+  messageEvent: (msg: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
@@ -19,6 +21,7 @@ const DeletePopup = ({
   const deleteTask = () => {
     setIsDeleting(true);
     setTimeout(() => {
+      messageEvent('Task successfully deleted!');
       setTasks(currTasks => {
         return currTasks.filter(task => task.id !== taskId);
       });
