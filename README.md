@@ -2,6 +2,8 @@
 
 Task Master is a simple task management application that allows users to create, edit, and delete tasks, mark tasks as complete, and change the page theme.
 
+[Hosted Version](https://mytask-master.netlify.app/)
+
 ## Functionalities
 
 - **Create Task:** Users can create new tasks by providing a title, description, and due date.
