@@ -1,33 +1,38 @@
-@media only screen and (max-width: 1200px) {
-  .form input {
-    width: 90%;
+@media only screen and (max-width: 800px) {
+  #theme-toggler-container {
+    display: none;
   }
 
-  .form textArea {
-    width: 90%;
+  #theme-toggler-mobile {
+    display: flex;
   }
 }
 @media only screen and (max-width: 600px) {
+  #theme-toggler-mobile {
+    width: 3rem;
+    height: 3rem;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  #theme-toggler-mobile svg {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 200%;
+  }
+
   .task-container {
     width: 80%;
   }
 
-  .popup-content {
+  #add-task-container {
     width: 80%;
   }
-
   .task-title,
   .task-description {
-    font-size: 90%;
     text-align: center;
-  }
-
-  .form label {
-    font-size: 80%;
-  }
-
-  .req-text {
-    font-size: 35%;
   }
 
   .delete-modal-title {

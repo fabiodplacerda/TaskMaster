@@ -10,9 +10,6 @@
 body {
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  /* background-color: #fbab7e;
-  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
-  background-attachment: fixed; */
 }
 
 h1 {
@@ -243,7 +240,7 @@ h1 {
   display: flex;
   align-items: center;
   position: absolute;
-  top: 3rem;
+  top: 3.8rem;
   right: 5rem;
 }
 
@@ -265,6 +262,27 @@ h1 {
 
 #theme-toggler.dark {
   transform: translate(3.3rem);
+  background-color: white;
+  color: #222831;
+}
+
+#theme-toggler-mobile {
+  display: none;
+  position: absolute;
+  top: 3.5rem;
+  right: 3rem;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: #222831;
+  border: 0;
+  border-radius: 1rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+#theme-toggler-mobile.dark {
   background-color: white;
   color: #222831;
 }
