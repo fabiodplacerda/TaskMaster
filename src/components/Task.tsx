@@ -9,11 +9,13 @@ const Task = ({
   markHasCompleted,
   selected,
   setSelected,
+  setIsEditing,
 }: {
   task: TaskInterface;
   markHasCompleted: (taskId: number) => void;
   selected: SelectedTask;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [day, setDay] = useState(moment().startOf('day'));
   const [dueDate, setDueDate] = useState('');
@@ -50,8 +52,10 @@ const Task = ({
   const taskSelection = (task: SelectedTask) => {
     if (task.id === selected.id) {
       setSelected({});
+      setIsEditing(false);
     } else {
       setSelected(task);
+      setIsEditing(false);
     }
   };
 
@@ -66,10 +70,15 @@ const Task = ({
         <div className="task-header">
           <p className="task-id">#{task.id}</p>
           <h2 className="task-title">{task.title}</h2>
-          <p className="due-date">
-            Due:{' '}
-            <span className={overdue ? 'overdue' : 'on-time'}>{dueDate}</span>
-          </p>
+          {task.completed ? (
+            <p className="due-date">Completed!</p>
+          ) : (
+            <p className="due-date">
+              Due:{' '}
+              <span className={overdue ? 'overdue' : 'on-time'}>{dueDate}</span>
+            </p>
+          )}
+
           <label htmlFor={`status-${task.id}`} className="check">
             {<CheckCircleIcon />}
           </label>

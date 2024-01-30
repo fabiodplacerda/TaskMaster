@@ -12,13 +12,16 @@ import SelectedTask from '../interfaces/selected';
 const AddTask = ({
   setTasks,
   setSelected,
+  openAdder,
+  setOpenAdder,
 }: {
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  openAdder: boolean;
+  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
-  const [open, setOpen] = useState(false);
   const [titleReqChar, setTitleReqChar] = useState(false);
   const [descriptionReqChar, setDescriptionReqChar] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -62,7 +65,7 @@ const AddTask = ({
       ]);
       setTitleInput('');
       setDescriptionInput('');
-      setOpen(false);
+      setOpenAdder(false);
       setDescriptionReqChar(false);
       setTitleReqChar(false);
       setIsAdding(false);
@@ -71,7 +74,7 @@ const AddTask = ({
   };
 
   const handleAddButtonClick = () => {
-    setOpen(true);
+    setOpenAdder(true);
     setSelected({ id: 0 });
     setTimeout(() => {
       window.scrollTo({
@@ -83,7 +86,7 @@ const AddTask = ({
 
   return (
     <>
-      {open ? (
+      {openAdder ? (
         <div id="add-task-container">
           <form action="" onSubmit={submitTask} className="form">
             <div className="input-container">
@@ -116,7 +119,7 @@ const AddTask = ({
             <div className="btn-container-add">
               <Button
                 onClick={() => {
-                  setOpen(false);
+                  setOpenAdder(false);
                 }}
               >
                 Cancel

@@ -17,16 +17,17 @@ const EditTask = ({
   isEditing,
   setIsEditing,
   setSelected,
+  setOpenAdder,
 }: {
   selected: SelectedTask;
   setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
   isEditing: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
   setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
-  // const [showForm, setShowForm] = useState(false);
   const [open, setOpen] = useState(false);
   const [titleReqChar, setTitleReqChar] = useState(false);
   const [descriptionReqChar, setDescriptionReqChar] = useState(false);
@@ -57,6 +58,7 @@ const EditTask = ({
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget.closest('li'));
     setOpen(previousOpen => !previousOpen);
+    setOpenAdder(false);
   };
 
   const canBeOpen = open && Boolean(anchorEl);
@@ -117,6 +119,7 @@ const EditTask = ({
         type="button"
         className="button"
         onClick={event => {
+          console.log(open);
           handleClick(event);
           setIsEditing(curr => {
             return !curr;
@@ -187,76 +190,3 @@ const EditTask = ({
 };
 
 export default EditTask;
-
-// if (open) {
-//   return (
-//     <div id="add-task-container">
-//       <button className="close" onClick={closeModal}>
-//         X
-//       </button>
-//       <form action="" onSubmit={saveHandler} className="form">
-//         <div className="input-container">
-//           <TextField
-//             id="outlined-basic"
-//             label="Task Name"
-//             variant="outlined"
-//             onChange={editTitleHandler}
-//             value={editTitle}
-//           />
-//           <p className="req-text">Please enter between 5 - 30 characters</p>
-//           <p className="req-text">{editTitle.length} of 30 char</p>
-//         </div>
-
-//         <div className="input-container">
-//           <TextField
-//             id="outlined-multiline-static"
-//             label="Description"
-//             multiline
-//             rows={5}
-//             onChange={editDescriptionHandler}
-//             value={editDescription}
-//           />
-//           <p className="req-text">Please enter between 5 - 100 characters</p>
-//           <p className="req-text">{editDescription.length} of 100 char</p>
-//         </div>
-
-//         <Calendar dueDate={dueDate} setDueDate={setDueDate} />
-
-//         <div className="btn-container-add">
-//           <Button
-//             onClick={() => {
-//               setOpen(false);
-//             }}
-//           >
-//             Cancel
-//           </Button>
-//           <LoadingButton
-//             type="submit"
-//             variant="contained"
-//             color="success"
-//             loading={isSaving ? true : false}
-//             disabled={titleReqChar && descriptionReqChar ? false : true}
-//           >
-//             Save
-//           </LoadingButton>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// } else {
-//   return (
-//     <Button
-//       type="button"
-//       className="button"
-//       onClick={() => {
-//         setIsEditing(curr => {
-//           return !curr;
-//         });
-//         setOpen(true);
-//       }}
-//       variant="outlined"
-//     >
-//       EDIT
-//     </Button>
-//   );
-// }

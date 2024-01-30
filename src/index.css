@@ -119,11 +119,6 @@ h1 {
   color: #fff;
 }
 
-.completed .overdue,
-.completed .on-time {
-  color: inherit;
-}
-
 .check {
   cursor: pointer;
   position: absolute;
@@ -137,7 +132,6 @@ h1 {
 }
 
 .btn-container {
-  /* display: none; */
   gap: 1rem;
   display: flex;
   opacity: 0;
