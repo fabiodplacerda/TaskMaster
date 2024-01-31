@@ -16,7 +16,7 @@ const TaskList = () => {
       title: 'Learn TypeScript',
       completed: false,
       description:
-        'Learn all about TypeScript, is functionalities, types interfaces and more! ',
+        'Learn all about TypeScript, is functionalities, types interfaces and more!',
       dueDate: '2024-01-27T00:00:00.000Z',
     },
     {
@@ -47,8 +47,6 @@ const TaskList = () => {
     });
   };
 
-  console.log(selected, 'this was selected');
-
   if (!tasks.length) {
     return (
       <div id="no-tasks-container">
@@ -74,7 +72,6 @@ const TaskList = () => {
               className={`${
                 task.completed ? 'task-container completed' : 'task-container'
               } ${task.id === selected.id ? 'selected' : 'not-selected'}`}
-              onClick={() => {}}
             >
               <Task
                 task={task}

@@ -5,18 +5,17 @@ import Button from '@mui/material/Button';
 import WarningIcon from '@mui/icons-material/Warning';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-const DeletePopup = ({
-  taskId,
-  setTasks,
-  messageEvent,
-}: {
+interface DeletePopupProps {
   taskId: number;
   setTasks: React.Dispatch<SetStateAction<TaskInterface[]>>;
   messageEvent: (msg: string) => void;
-}) => {
+}
+
+const DeletePopup = ({ taskId, setTasks, messageEvent }: DeletePopupProps) => {
   const [open, setOpen] = useState(false);
-  const closeModal = () => setOpen(false);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const closeModal = () => setOpen(false);
 
   const deleteTask = () => {
     setIsDeleting(true);
@@ -49,7 +48,8 @@ const DeletePopup = ({
             Would you like to delete this task?
           </h3>
           <p className="delete-modal-text">
-            Once deleted, this task will no longer be available.
+            Deleting this task will permanently remove it from the task list.
+            This action cannot be undone!
           </p>
           <div className="btn-container-delete">
             <Button onClick={closeModal} variant="contained">
@@ -60,7 +60,7 @@ const DeletePopup = ({
               color="error"
               onClick={deleteTask}
               loading={isDeleting ? true : false}
-              loadingIndicator="deleting..."
+              loadingIndicator="Deleting..."
             >
               Delete Task
             </LoadingButton>

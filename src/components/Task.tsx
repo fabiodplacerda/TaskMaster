@@ -1,8 +1,16 @@
-import TaskInterface from '../interfaces/tasks';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import SelectedTask from '../interfaces/selected';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
+import TaskInterface from '../interfaces/tasks';
+import SelectedTask from '../interfaces/selected';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+interface TaskProps {
+  task: TaskInterface;
+  markHasCompleted: (taskId: number) => void;
+  selected: SelectedTask;
+  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const Task = ({
   task,
@@ -10,13 +18,7 @@ const Task = ({
   selected,
   setSelected,
   setIsEditing,
-}: {
-  task: TaskInterface;
-  markHasCompleted: (taskId: number) => void;
-  selected: SelectedTask;
-  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}: TaskProps) => {
   const [day] = useState(moment().startOf('day'));
   const [dueDate, setDueDate] = useState('');
   const [overdue, setOverdue] = useState(false);
@@ -49,7 +51,7 @@ const Task = ({
     }
   }, [task.dueDate]);
 
-  const taskSelection = (task: SelectedTask) => {
+  const handleTaskSelection = (task: SelectedTask) => {
     if (task.id === selected.id) {
       setSelected({});
       setIsEditing(false);
@@ -64,7 +66,7 @@ const Task = ({
       <div
         className="task-main-container"
         onClick={() => {
-          taskSelection(task);
+          handleTaskSelection(task);
         }}
       >
         <div className="task-header">
