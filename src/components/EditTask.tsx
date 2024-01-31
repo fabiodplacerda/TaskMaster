@@ -1,14 +1,26 @@
 import { useRef, useEffect, useState } from 'react';
 import SelectedTask from '../interfaces/selected';
 import TaskInterface from '../interfaces/tasks';
+
+import Calendar from './Calendar';
+import dayjs, { Dayjs } from 'dayjs';
+import moment from 'moment';
+
 import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
-import Calendar from './Calendar';
-import dayjs, { Dayjs } from 'dayjs';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
-import moment from 'moment';
+
+interface EditTaskProps {
+  selected: SelectedTask;
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  messageEvent: (msg: string) => void;
+}
 
 const EditTask = ({
   selected,
@@ -18,15 +30,7 @@ const EditTask = ({
   setSelected,
   setOpenAdder,
   messageEvent,
-}: {
-  selected: SelectedTask;
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  isEditing: boolean;
-  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
-  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  messageEvent: (msg: string) => void;
-}) => {
+}: EditTaskProps) => {
   const [editTitle, setEditTitle] = useState('');
   const [editDescription, setEditDescription] = useState('');
   const [open, setOpen] = useState(false);
@@ -77,11 +81,7 @@ const EditTask = ({
   const editTitleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setEditTitle(input);
-    if (input.length >= 5 && input.length <= 30) {
-      setTitleReqChar(true);
-    } else {
-      setTitleReqChar(false);
-    }
+    setTitleReqChar(input.length >= 5 && input.length <= 30);
   };
 
   const editDescriptionHandler = (
@@ -89,11 +89,7 @@ const EditTask = ({
   ) => {
     const textArea = event.target.value;
     setEditDescription(event.target.value);
-    if (textArea.length >= 5 && textArea.length <= 100) {
-      setDescriptionReqChar(true);
-    } else {
-      setDescriptionReqChar(false);
-    }
+    setDescriptionReqChar(textArea.length >= 5 && textArea.length <= 100);
   };
 
   const saveHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -189,7 +185,7 @@ const EditTask = ({
                     variant="contained"
                     color="success"
                     loading={isSaving ? true : false}
-                    disabled={titleReqChar && descriptionReqChar ? false : true}
+                    disabled={!titleReqChar || !descriptionReqChar}
                   >
                     Save
                   </LoadingButton>

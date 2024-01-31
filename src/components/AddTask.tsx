@@ -1,13 +1,23 @@
 import { useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
+import Calendar from './Calendar';
+import moment from 'moment';
+
 import TaskInterface from '../interfaces/tasks';
+import SelectedTask from '../interfaces/selected';
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
-import dayjs, { Dayjs } from 'dayjs';
-import Calendar from './Calendar';
-import moment from 'moment';
-import SelectedTask from '../interfaces/selected';
+
+interface AddTaskProps {
+  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
+  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
+  openAdder: boolean;
+  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
+  messageEvent: (msg: string) => void;
+}
 
 const AddTask = ({
   setTasks,
@@ -15,13 +25,7 @@ const AddTask = ({
   openAdder,
   setOpenAdder,
   messageEvent,
-}: {
-  setTasks: React.Dispatch<React.SetStateAction<TaskInterface[]>>;
-  setSelected: React.Dispatch<React.SetStateAction<SelectedTask>>;
-  openAdder: boolean;
-  setOpenAdder: React.Dispatch<React.SetStateAction<boolean>>;
-  messageEvent: (msg: string) => void;
-}) => {
+}: AddTaskProps) => {
   const [titleInput, setTitleInput] = useState('');
   const [descriptionInput, setDescriptionInput] = useState('');
   const [titleReqChar, setTitleReqChar] = useState(false);
@@ -29,29 +33,21 @@ const AddTask = ({
   const [isAdding, setIsAdding] = useState(false);
   const [dueDate, setDueDate] = useState<Dayjs | null>(dayjs());
 
-  const titleHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
     setTitleInput(input);
-    if (input.length >= 5 && input.length <= 30) {
-      setTitleReqChar(true);
-    } else {
-      setTitleReqChar(false);
-    }
+    setTitleReqChar(input.length >= 5 && input.length <= 30);
   };
 
-  const descriptionHandler = (
+  const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const textArea = event.target.value;
     setDescriptionInput(textArea);
-    if (textArea.length >= 5 && textArea.length <= 100) {
-      setDescriptionReqChar(true);
-    } else {
-      setDescriptionReqChar(false);
-    }
+    setDescriptionReqChar(textArea.length >= 5 && textArea.length <= 100);
   };
 
-  const submitTask = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsAdding(true);
     setTimeout(() => {
@@ -91,13 +87,13 @@ const AddTask = ({
     <>
       {openAdder ? (
         <div className="form-container">
-          <form action="" onSubmit={submitTask} className="form">
+          <form action="" onSubmit={handleSubmit} className="form">
             <div className="input-container">
               <TextField
                 id="outlined-basic"
                 label="Task Name"
                 variant="outlined"
-                onChange={titleHandler}
+                onChange={handleTitleChange}
                 value={titleInput}
               />
               <p className="req-text">Please enter between 5 - 30 characters</p>
@@ -109,7 +105,7 @@ const AddTask = ({
                 label="Description"
                 multiline
                 rows={5}
-                onChange={descriptionHandler}
+                onChange={handleDescriptionChange}
                 value={descriptionInput}
               />
               <p className="req-text">
@@ -132,7 +128,7 @@ const AddTask = ({
                 variant="contained"
                 color="success"
                 loading={isAdding ? true : false}
-                disabled={titleReqChar && descriptionReqChar ? false : true}
+                disabled={!titleReqChar || !descriptionReqChar}
               >
                 Submit task
               </LoadingButton>
