@@ -16,7 +16,7 @@ const TaskList = () => {
       title: 'Learn TypeScript',
       completed: false,
       description:
-        'Learn all about TypeScript, is functionalities, types interfaces and more!',
+        'Learn all about TypeScript, its functionalities, types, interfaces, and more!',
       dueDate: '2024-01-27T00:00:00.000Z',
     },
     {
