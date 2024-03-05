@@ -39,6 +39,10 @@ const Task = ({
         setDueDate('Yesterday');
         setOverdue(true);
         break;
+      case 'a month ago':
+        setDueDate(relativeTime);
+        setOverdue(true);
+        break;
       default:
         if (relativeTime.includes('days ago')) {
           setOverdue(true);
@@ -70,7 +74,9 @@ const Task = ({
         }}
       >
         <div className="task-header">
-          <p className="task-id">#{task.id}</p>
+          <p className={task.completed ? 'task-id completed' : 'task-id'}>
+            #{task.id}
+          </p>
           <h2 className="task-title">{task.title}</h2>
           {task.completed ? (
             <p className="due-date">Completed!</p>

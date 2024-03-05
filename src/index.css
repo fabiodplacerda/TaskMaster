@@ -101,6 +101,7 @@ h1 {
   position: absolute;
   top: 0.3rem;
   color: #999;
+  transition: all 0.3s ease-in-out;
 }
 
 .task-description {

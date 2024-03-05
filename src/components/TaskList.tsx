@@ -14,7 +14,7 @@ const TaskList = () => {
     {
       id: 1,
       title: 'Learn TypeScript',
-      completed: false,
+      completed: true,
       description:
         'Learn all about TypeScript, its functionalities, types, interfaces, and more!',
       dueDate: '2024-01-27T00:00:00.000Z',
@@ -26,6 +26,14 @@ const TaskList = () => {
       description:
         'Reinforce my understanding of TypeScript through practical exercises to strengthen my skills.',
       dueDate: '2024-01-28T00:00:00.000Z',
+    },
+    {
+      id: 3,
+      title: 'Learning Python',
+      completed: false,
+      description:
+        'Master the basics of Python programming, including syntax, data types, and control structures, to build a solid foundation for software development and data analysis.',
+      dueDate: '2024-03-28T00:00:00.000Z',
     },
   ]);
 
