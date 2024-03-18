@@ -39,14 +39,16 @@ const Task = ({
         setDueDate('Yesterday');
         setOverdue(true);
         break;
-      case 'a month ago':
-        setDueDate(relativeTime);
-        setOverdue(true);
-        break;
       default:
         if (relativeTime.includes('days ago')) {
           setOverdue(true);
           setDueDate(relativeTime);
+        } else if (
+          relativeTime.includes('months ago') ||
+          relativeTime.includes('month ago')
+        ) {
+          setDueDate(relativeTime);
+          setOverdue(true);
         } else {
           setDueDate(relativeTime);
           setOverdue(false);
